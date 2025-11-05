@@ -1,0 +1,64 @@
+name: Generate Jutge Problem
+name: generate-problem
+
+on:
+  workflow_dispatch:
+    inputs:
+      problem_id:
+        description: 'Problem ID (e.g., X64734_en)'
+        required: true
+      push:
+        description: 'Push generated files back to the repo (true/false)'
+        required: false
+        default: 'true'
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    env:
+      JUTGE_EMAIL: ${{ secrets.JUTGE_EMAIL }}
+      JUTGE_PASSWORD: ${{ secrets.JUTGE_PASSWORD }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - run: bun add -g @jutge.org/cli
+
+      - run: jutge login --email "$JUTGE_EMAIL" --password "$JUTGE_PASSWORD"
+
+      - run: |
+          set -euo pipefail
+          INPUT="${{ github.event.inputs.problem_id }}"
+          resolved_id=$(jutge problems getProblem "$INPUT" --json 2>/dev/null | jq -r '.problem_id // empty' || true)
+          if [ -z "$resolved_id" ]; then
+            echo "Problem '$INPUT' not found on Jutge.org"
+            exit 1
+          fi
+          PROBLEM="$resolved_id"
+          DIR="problems/$PROBLEM"
+          if [ -d "$DIR" ]; then
+            echo "Directory exists: $DIR"
+            exit 1
+          fi
+          mkdir -p "$DIR"
+          jutge problems getMarkdownStatement "$PROBLEM" > "$DIR/Statement.md"
+          cat > "$DIR/main.cc" <<'EOF'
+#include <iostream>
+
+int main(void) {
+    std::cout << "Hello, Santito!\n";
+    return 0;
+}
+EOF
+
+      - if: ${{ github.event.inputs.push == 'true' }}
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add "problems/${{ github.event.inputs.problem_id }}"
+          git commit -m "chore: add problem ${{ github.event.inputs.problem_id }} (generated) [skip ci]" || true
+          git push
