@@ -3,8 +3,12 @@ name: Check Problem Status
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'problems/**'
   pull_request:
     branches: [ "main" ]
+    paths:
+      - 'problems/**'
 
 jobs:
   check:
