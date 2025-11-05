@@ -1,0 +1,26 @@
+# Donats quatre enters, comprovar que dos son iguals i dos son diferents
+
+Escriviu un programa que llegeix quatre enters d'entrada i comprova si
+dos d'ells son iguals i els altres dos son diferents de qualsevol altre.
+
+## Entrada
+
+Quatre enters en una mateixa línia.
+
+## Sortida
+
+Si dos dels quatre enters d'entrada son iguals i els altres dos son
+diferents de qualsevol altre, escriu `YES`. En cas contrari, escriu
+`NO`.
+
+## Observació
+
+No es poden usar mecanismes d'enmagatzemament massiu de dades, com per
+exemple `string` o `vector`
+
+## Autor
+
+PRO1
+
+© Jutge.org, 2006--2025.
+

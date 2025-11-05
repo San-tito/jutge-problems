@@ -1,0 +1,22 @@
+# Hola-adéu
+
+Feu un programa que llegeixi una seqüència de lletres acabada en punt i
+digui si conté la successió de lletres consecutives '`h`', '`o`', '`l`',
+'`a`' o no.
+
+## Entrada
+
+L'entrada consisteix en una seqüència de lletres minúscules acabada en
+'`.`'.
+
+## Sortida
+
+Cal escriure "`hola`" si l'entrada conté les lletres '`h`', '`o`',
+'`l`', '`a`' consecutivament. Altrament, cal escriure "`adeu`".
+
+## Autor
+
+Salvador Roura
+
+© Jutge.org, 2006--2025.
+

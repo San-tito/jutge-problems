@@ -1,0 +1,31 @@
+# Paraules recursives
+
+Mireu de deduïr el que s'ha de fer en aquest exercici a partir dels
+exemples d'entrada i sortida.
+
+## Entrada
+
+L'entrada té varis casos. Cadascun consisteix en un dígit $d$ en una
+línia.
+
+## Sortida
+
+Per a cada cas d'entrada, la sortida té un string en una nova línia.
+Mireu de deduïr a partir dels exemples quin és l'string esperat a partir
+de cada $d$.
+
+## Observació
+
+**La solució d'aquest exercici ha de ser recursiva.** Podeu optar per
+fer una funció recursiva que va escrivint directament per la sortida
+l'string resultant, o una que retorna l'string i és el programa
+principal qui l'escriu. Sí que podeu fer servir un bucle dins del cos de
+la funció recursiva, si voleu, sempre i quan no subverteixi el fet que
+la solució general sigui recursiva.
+
+## Autor
+
+PRO1
+
+© Jutge.org, 2006--2025.
+
