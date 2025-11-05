@@ -1,0 +1,51 @@
+name: Check Problem Status
+
+on:
+  push:
+    paths:
+      - 'problems/**'
+  pull_request:
+    paths:
+      - 'problems/**'
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      JUTGE_EMAIL: ${{ secrets.JUTGE_EMAIL }}
+      JUTGE_PASSWORD: ${{ secrets.JUTGE_PASSWORD }}
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Install Jutge CLI
+        run: bun add -g @jutge.org/cli
+
+      - name: Login to Jutge.org
+        run: jutge login --email "$JUTGE_EMAIL" --password "$JUTGE_PASSWORD"
+
+      - name: Check Changed Problems
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }})
+          else
+            CHANGED_FILES=$(git diff --name-only HEAD^)
+          fi
+          
+          for file in $CHANGED_FILES; do
+            if [[ $file =~ ^problems/([^/]+)/ ]]; then
+              problem_id="${BASH_REMATCH[1]}"
+              echo "Checking status for $problem_id..."
+              status_json=$(jutge student statuses getForProblem "$problem_id" --json)
+              
+              if [ ! -z "$status_json" ]; then
+                status=$(echo "$status_json" | jq -r '.status')
+                [[ "$status" == "accepted" ]] && echo "✅ $problem_id" || echo "❌ $problem_id"
+              fi
+            fi
+          done
