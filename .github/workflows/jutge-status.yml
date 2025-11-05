@@ -29,18 +29,12 @@ jobs:
       - name: Login to Jutge.org
         run: jutge login --email "$JUTGE_EMAIL" --password "$JUTGE_PASSWORD"
 
-      - name: Check Changed Problems
+      - name: Check All Problems
         run: |
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }})
-          else
-            CHANGED_FILES=$(git diff --name-only HEAD^)
-          fi
-          
-          for file in $CHANGED_FILES; do
-            if [[ $file =~ ^problems/([^/]+)/ ]]; then
-              problem_id="${BASH_REMATCH[1]}"
-              echo "Checking status for $problem_id..."
+          for problem_dir in problems/*/; do
+            if [ -d "$problem_dir" ]; then
+              problem_id=$(basename "$problem_dir")
+              echo "Checking $problem_id..."
               status_json=$(jutge student statuses getForProblem "$problem_id" --json)
               
               if [ ! -z "$status_json" ]; then
