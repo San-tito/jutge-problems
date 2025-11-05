@@ -45,14 +45,14 @@ jobs:
           fi
           mkdir -p "$DIR"
           jutge problems getMarkdownStatement "$PROBLEM" > "$DIR/Statement.md"
-          cat > "$DIR/main.cc" <<'EOF'
-#include <iostream>
-
-int main(void) {
-    std::cout << "Hello, Santito!\n";
-    return 0;
-}
-EOF
+          cat > "$DIR/main.cc" <<-EOF
+          #include <iostream>
+          
+          int main(void) {
+              std::cout << "Hello, Santito!\n";
+              return 0;
+          }
+          EOF
 
       - if: ${{ github.event.inputs.push == 'true' }}
         run: |
