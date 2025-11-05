@@ -6,10 +6,6 @@ on:
       problem_id:
         description: 'Problem ID (e.g., X64734_en)'
         required: true
-      push:
-        description: 'Push generated files back to the repo (true/false)'
-        required: false
-        default: 'true'
 
 jobs:
   generate:
@@ -54,10 +50,11 @@ jobs:
           }
           EOF
 
-      - if: ${{ github.event.inputs.push == 'true' }}
-        run: |
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
-          git add "problems/${{ github.event.inputs.problem_id }}"
-          git commit -m "chore: add problem ${{ github.event.inputs.problem_id }} (generated) [skip ci]" || true
-          git push
+      - name: Commit and push generated files
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: github-actions[bot]
+          author_email: github-actions[bot]@users.noreply.github.com
+          message: "chore: add problem ${{ github.event.inputs.problem_id }} (generated) [skip ci]"
+          add: "problems/${{ github.event.inputs.problem_id }}"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
