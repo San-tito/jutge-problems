@@ -1,5 +1,4 @@
 name: Generate Jutge Problem
-name: generate-problem
 
 on:
   workflow_dispatch:
