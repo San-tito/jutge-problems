@@ -2,12 +2,9 @@ name: Check Problem Status
 
 on:
   push:
-    paths:
-      - 'problems/**'
+    branches: [ "main" ]
   pull_request:
-    paths:
-      - 'problems/**'
-  workflow_dispatch:
+    branches: [ "main" ]
 
 jobs:
   check:
@@ -35,11 +32,7 @@ jobs:
             if [ -d "$problem_dir" ]; then
               problem_id=$(basename "$problem_dir")
               echo "Checking $problem_id..."
-              status_json=$(jutge student statuses getForProblem "$problem_id" --json)
-              
-              if [ ! -z "$status_json" ]; then
-                status=$(echo "$status_json" | jq -r '.status')
-                [[ "$status" == "accepted" ]] && echo "✅ $problem_id" || echo "❌ $problem_id"
-              fi
+              status=$(jutge student statuses getForProblem "$problem_id" --json | jq -r '.status')
+              [[ "$status" == "accepted" ]] && echo "✅ $problem_id" || echo "❌ $problem_id"
             fi
           done
