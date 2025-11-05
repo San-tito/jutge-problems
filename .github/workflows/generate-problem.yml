@@ -53,8 +53,8 @@ jobs:
       - name: Commit and push generated files
         uses: EndBug/add-and-commit@v9
         with:
-          author_name: github-actions[bot]
-          author_email: github-actions[bot]@users.noreply.github.com
-          message: "chore: add problem ${{ github.event.inputs.problem_id }} (generated) [skip ci]"
+          author_name: Santito
+          author_email: 68120901+San-tito@users.noreply.github.com
+          message: "chore: add problem ${{ github.event.inputs.problem_id }}"
           add: "problems/${{ github.event.inputs.problem_id }}"
           github_token: ${{ secrets.GITHUB_TOKEN }}
