@@ -58,13 +58,13 @@ jobs:
           message: "chore: add problem ${{ github.event.inputs.problem_id }}"
           add: "problems/${{ github.event.inputs.problem_id }}"
           github_token: ${{ secrets.GITHUB_TOKEN }}
-        - name: Create a pull request with generated files
-          uses: peter-evans/create-pull-request@v5
-          with:
-            token: ${{ secrets.GITHUB_TOKEN }}
-            commit-message: "chore: add problem ${{ github.event.inputs.problem_id }} (generated) [skip ci]"
-            title: "chore: add problem ${{ github.event.inputs.problem_id }} (generated)"
-            body: |
-              This pull request was created automatically by the generate-problem workflow.
-            branch: "autogen/problem-${{ github.event.inputs.problem_id }}"
-            base: main
+      - name: Create a pull request with generated files
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: add problem ${{ github.event.inputs.problem_id }} (generated) [skip ci]"
+          title: "chore: add problem ${{ github.event.inputs.problem_id }} (generated)"
+          body: |
+            This pull request was created automatically by the generate-problem workflow.
+          branch: "autogen/problem-${{ github.event.inputs.problem_id }}"
+          base: main
