@@ -29,7 +29,7 @@ jobs:
           for problem_dir in problems/*/; do
             if [ -d "$problem_dir" ]; then
               problem_id=$(basename "$problem_dir")
-              status=$(./scripts/status.js "$problem_id")
+              status=$(node ./scripts/status.js "$problem_id")
               [[ "$status" == "accepted" ]] && echo "✅ $problem_id" || echo "❌ $problem_id"
             fi
           done
