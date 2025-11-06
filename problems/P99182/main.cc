@@ -1,7 +1,9 @@
 #include <iostream>
 
-int main(void)
+int main(void) 
 {
-    std::cout << "Hello, Santito!\n";
-    return 0;
+	int a, b;
+	std::cin >> a >> b;
+	std::cout << ((a + b) * 0.5) << '\n';
+	return 0;
 }

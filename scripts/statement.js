@@ -19,7 +19,7 @@ async function main() {
     const statement = await api_client.statement(problem_nm);
     console.log(statement);
   } catch (err) {
-    console.error(script, "❌", err.message || err);
+    console.error(script, "❌", err.message);
   }
 }
 

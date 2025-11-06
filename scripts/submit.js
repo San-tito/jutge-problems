@@ -36,7 +36,7 @@ async function main() {
       problem_nm,
       code,
     );
-    console.log(` Submitted: ${submission_id}`);
+    console.log(`Submitted: ${submission_id}`);
 
     let verdict = null;
     while (!verdict) {
@@ -45,13 +45,13 @@ async function main() {
 
       if (state.state === "done") {
         verdict = state.verdict || state.veredict || "unknown";
-        console.log(`\n Verdict: ${verdict}`);
+        console.log(`\nVerdict: ${verdict}`);
       } else {
         process.stdout.write(".");
       }
     }
   } catch (err) {
-    console.error(script, "❌", err.message || err);
+    console.error(script, "❌", err.message);
   }
 }
 
