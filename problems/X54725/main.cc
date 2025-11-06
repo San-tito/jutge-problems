@@ -4,6 +4,6 @@ int main(void)
 {
     int a, b;
     std::cin >> a >> b;
-    std::cout << (a * (a <= b) + (b < a) * b) << '\n';
+    std::cout << ((a < b) ? a : b) << std::endl;
     return 0;
 }
