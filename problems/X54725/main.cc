@@ -2,6 +2,8 @@
 
 int main(void)
 {
-    std::cout << "Hello, Santito!\n";
+    int a, b;
+    std::cin >> a >> b;
+    std::cout << (a * (a <= b) + (b < a) * b) << '\n';
     return 0;
 }
