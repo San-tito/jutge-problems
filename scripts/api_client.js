@@ -28,12 +28,21 @@ const api_client = {
     this.meta = { token };
   },
 
-  statement: async function (problem_nm) {
+  problem: async function (problem_nm) {
     const { problems } = await this.execute(
       "problems.getAbstractProblem",
       problem_nm,
     );
-    const problem_id = Object.values(problems).at(-1).problem_id;
+    const preference = ["en", "es", "ca"];
+    for (const lang of preference) {
+      const match = Object.values(problems).find((p) => p.language_id === lang);
+      if (match) return match.problem_id;
+    }
+    return Object.values(problems)[0].problem_id;
+  },
+
+  statement: async function (problem_nm) {
+    const problem_id = await this.problem(problem_nm);
     return await this.execute("problems.getMarkdownStatement", problem_id);
   },
 
@@ -45,11 +54,7 @@ const api_client = {
   },
 
   submit: async function (problem_nm, code) {
-    const { problems } = await this.execute(
-      "problems.getAbstractProblem",
-      problem_nm,
-    );
-    const problem_id = Object.values(problems).at(-1).problem_id;
+    const problem_id = await this.problem(problem_nm);
 
     const now = new Date();
     const date = now.toLocaleDateString("en-GB");
