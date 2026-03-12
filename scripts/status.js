@@ -15,8 +15,8 @@ async function main() {
 
   try {
     await api_client.login(email, password);
-    const status = await api_client.status(problem_nm);
-    console.log(JSON.stringify(status, null, 2));
+    const { status } = await api_client.status(problem_nm);
+    console.log(status);
   } catch (err) {
     console.error(script, "❌", err.message);
     process.exit(1);

@@ -11,12 +11,19 @@ async function main() {
 
   if (!problem_id || !submission_id) {
     console.error(`${script} <problem_id> <submission_id>`);
+    console.error("Example: submission P12345_en abc123`");
     process.exit(1);
   }
 
   try {
     await api_client.login(email, password);
     const submission = await api_client.submission(problem_id, submission_id);
+    
+    console.log(`\nSubmission ID: ${submission.submission_id}`);
+    console.log(`State: ${submission.state}`);
+    console.log(`Verdict: ${submission.veredict || submission.verdict || "pending"}`);
+    console.log(`Time: ${submission.time_in}`);
+    console.log(`Compiler: ${submission.compiler_id}`);
     console.log(JSON.stringify(submission, null, 2));
   } catch (err) {
     console.error(script, "❌", err.message);

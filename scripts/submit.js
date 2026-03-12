@@ -14,14 +14,14 @@ async function read_stdin() {
 
 async function main() {
   const script = path.basename(process.argv[1]);
-  const problem_nm = process.argv[2];
-  const compiler = process.argv[3] || "P1++";
-  const annotation = process.argv[4] || "";
+  const problem_id = process.argv[2];
+  const compiler_id = process.argv[3];
   const email = process.env.JUTGE_EMAIL;
   const password = process.env.JUTGE_PASSWORD;
 
-  if (!problem_nm) {
-    console.error(`${script} <problem_nm> [compiler] [annotation]`);
+  if (!problem_id || !compiler_id) {
+    console.error(`${script} <problem_id> <compiler_id>`);
+    console.error("Example: clang-format solution.cpp | submit P12345_en P1++");
     process.exit(1);
   }
 
@@ -34,25 +34,40 @@ async function main() {
 
     await api_client.login(email, password);
 
-    const { problem_id, submission_id } = await api_client.submit(
-      problem_nm,
+    const submission_id = await api_client.submit(
+      problem_id,
       code,
-      compiler,
-      annotation,
+      compiler_id
     );
-    console.log(`Submitted: ${submission_id}`);
+    console.log(`✓ Submitted: ${submission_id}`);
+    console.log(`\nTo check verdict:`);
+    console.log(`  submission ${problem_id} ${submission_id}`);
 
+    // Optional: poll for verdict
     let verdict = null;
-    while (!verdict) {
+    let elapsed = 0;
+    const maxWait = 30000; // 30 seconds
+    
+    while (!verdict && elapsed < maxWait) {
       await new Promise((r) => setTimeout(r, 1000));
-      const state = await api_client.submission(problem_id, submission_id);
-
-      if (state.state === "done") {
-        verdict = state.verdict || state.veredict || "unknown";
-        console.log(`\nVerdict: ${verdict}`);
-      } else {
-        process.stdout.write(".");
+      elapsed += 1000;
+      
+      try {
+        const state = await api_client.submission(problem_id, submission_id);
+        if (state.state === "done") {
+          verdict = state.veredict || state.verdict || "unknown";
+          console.log(`\n✓ Verdict: ${verdict}`);
+          break;
+        } else {
+          process.stdout.write(".");
+        }
+      } catch (err) {
+        // Continue polling
       }
+    }
+    
+    if (!verdict) {
+      console.log("\n⏳ Still processing... check verdict later");
     }
   } catch (err) {
     console.error(script, "❌", err.message);
