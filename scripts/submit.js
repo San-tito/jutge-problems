@@ -15,11 +15,13 @@ async function read_stdin() {
 async function main() {
   const script = path.basename(process.argv[1]);
   const problem_nm = process.argv[2];
+  const compiler = process.argv[3] || "P1++";
+  const annotation = process.argv[4] || "";
   const email = process.env.JUTGE_EMAIL;
   const password = process.env.JUTGE_PASSWORD;
 
   if (!problem_nm) {
-    console.error(`${script} <problem_nm>`);
+    console.error(`${script} <problem_nm> [compiler] [annotation]`);
     process.exit(1);
   }
 
@@ -35,6 +37,8 @@ async function main() {
     const { problem_id, submission_id } = await api_client.submit(
       problem_nm,
       code,
+      compiler,
+      annotation,
     );
     console.log(`Submitted: ${submission_id}`);
 
@@ -52,6 +56,7 @@ async function main() {
     }
   } catch (err) {
     console.error(script, "❌", err.message);
+    process.exit(1);
   }
 }
 
