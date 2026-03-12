@@ -47,12 +47,12 @@ const api_client = {
   },
 
   templates: async function (problem_id) {
-    const [result] = await this.execute("problems.getTemplates", problem_id);
+    const { result } = await this.execute("problems.getTemplates", problem_id);
     return result;
   },
 
   template: async function (problem_id, template) {
-    const [result, files] = await this.execute("problems.getTemplate", {
+    const { result, files } = await this.execute("problems.getTemplate", {
       problem_id,
       template,
     });
@@ -64,7 +64,7 @@ const api_client = {
     const date = now.toLocaleDateString("en-GB");
     const time = now.toLocaleTimeString("en-GB", { hour12: false });
 
-    const [{ submission_id }] = await this.execute("student.submissions.submit", {
+    const submission_id = await this.execute("student.submissions.submit", {
       problem_id,
       compiler_id,
       code,
@@ -75,7 +75,7 @@ const api_client = {
   },
 
   submission: async function (problem_id, submission_id) {
-    const [result] = await this.execute("student.submissions.get", {
+    const result = await this.execute("student.submissions.get", {
       problem_id,
       submission_id,
     });
@@ -83,7 +83,7 @@ const api_client = {
   },
 
   status: async function (problem_nm) {
-    const [result] = await this.execute("student.statuses.getForAbstractProblem", problem_nm);
+    const result = await this.execute("student.statuses.getForAbstractProblem", problem_nm);
     return result;
   },
 };
