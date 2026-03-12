@@ -1,26 +1,13 @@
-#include <cassert>
 #include <iostream>
+using namespace std;
 
-/*
- * @pre 0 ≤ n ≤ 12.
- * @post returns n! (the factorial of n).
- */
-int factorial(int n)
-{
-    assert(n >= 0 && n <= 12);
+int factorial(int n);
 
-    if (n == 0)
-        return 1;
-    return n * factorial(n - 1);
-}
-
-int main(void)
+int main()
 {
     int x;
-
-    while (std::cin >> x)
-    {
-        std::cout << factorial(x) << std::endl;
+    while (cin >> x) {
+        cout << factorial(x) << endl;
     }
     return 0;
 }

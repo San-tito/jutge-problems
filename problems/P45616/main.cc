@@ -1,7 +1,17 @@
 #include <iostream>
+#include <typeinfo>
+using namespace std;
 
-int main(void)
+Clock midnight();
+void increase(Clock& r);
+void print(const Clock& r);
+
+int main()
 {
-    std::cout << "Hello, Santito!\n";
+    Clock r = midnight();
+    for (int i = 0; i <= 25 * 60 * 60; ++i) {
+        print(r);
+        increase(r);
+    }
     return 0;
 }

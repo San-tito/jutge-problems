@@ -1,27 +1,19 @@
 #include <iostream>
 #include <vector>
+using namespace std;
 
-int evaluate(const std::vector<int> &P, int x)
-{
-    int sum = 0;
-    for (int i = P.size() - 1; i >= 0; --i)
-        sum = x * sum + P[i];
+int evaluate(const vector<int>& P, int x);
 
-    return sum;
-}
-
-int main(void)
+int main()
 {
     int n;
-
-    while (std::cin >> n)
-    {
-        std::vector<int> P(n);
+    while (cin >> n) {
+        vector<int> P(n);
         for (int i = 0; i < n; ++i)
-            std::cin >> P[i];
+            cin >> P[i];
         int x;
-        std::cin >> x;
-        std::cout << evaluate(P, x) << std::endl;
+        cin >> x;
+        cout << evaluate(P, x) << endl;
     }
     return 0;
 }

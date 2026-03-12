@@ -1,0 +1,26 @@
+# Lines in order (1)
+
+Write a program that, given a sequence of lines with words, tells which
+is the first line that has the words in increasing (lexicographic)
+order.
+
+## Input
+
+Input consists of a sequence of lines with words. Each line begins with
+a number $n$, followed by $n$ words made up of only lowercase letters.
+
+## Output
+
+Print the index of the first line with the words in (not necessary
+strictly) increasing order. If there is no such line, tell so. Follow
+the format of the examples.
+
+## Problem information
+
+Author: Unknown\
+Translator: Carlos Molina
+
+Generation: 2026-01-25T12:22:16.786Z
+
+© *Jutge.org*, 2006--2026.\
+<https://jutge.org>

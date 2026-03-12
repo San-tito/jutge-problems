@@ -1,7 +1,15 @@
 #include <iostream>
+using namespace std;
 
-int main(void)
+void swap2(int& a, int& b);
+
+int main()
 {
-    std::cout << "Hello, Santito!\n";
+    int x, y;
+    while (cin >> x >> y) {
+        swap2(x, y);
+        cout << x << " " << y << endl;
+    }
+
     return 0;
 }

@@ -1,7 +1,13 @@
 #include <iostream>
+using namespace std;
 
-int main(void)
+bool is_leap_year(int year);
+
+int main()
 {
-    std::cout << "Hello, Santito!\n";
+    int a;
+    while (cin >> a)
+        cout << (is_leap_year(a) ? "true" : "false") << endl;
+
     return 0;
 }

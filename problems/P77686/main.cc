@@ -1,7 +1,12 @@
 #include <iostream>
+using namespace std;
 
-int main(void)
-{
-    std::cout << "Hello, Santito!\n";
+
+bool is_palindromic(int n);
+
+
+int main() {
+    int n;
+    while (cin >> n) cout << (is_palindromic(n) ? "true" : "false") << endl;
     return 0;
 }

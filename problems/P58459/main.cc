@@ -1,7 +1,12 @@
 #include <iostream>
+using namespace std;
 
-int main(void)
+bool is_valid_date(int d, int m, int a);
+
+int main()
 {
-    std::cout << "Hello, Santito!\n";
+    int d, m, a;
+    while (cin >> d >> m >> a)
+        cout << (is_valid_date(d, m, a) ? "true" : "false") << endl;
     return 0;
 }

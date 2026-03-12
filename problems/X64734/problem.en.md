@@ -1,0 +1,26 @@
+# Hello and Bye!
+
+Write a program that prints a line with the message "`Hello and Bye!`".
+
+## Input
+
+There is not input: the program does not read anything.
+
+## Output
+
+Print exactly the required text in a line.
+
+## Observation
+
+This problem is atypical, because we do not need to read any input, and
+we always print the same. It is very easy!
+
+## Problem information
+
+Author: Unknown\
+Translator: Maria Serna
+
+Generation: 2026-01-25T17:29:03.506Z
+
+© *Jutge.org*, 2006--2026.\
+<https://jutge.org>

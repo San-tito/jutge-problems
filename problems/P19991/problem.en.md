@@ -1,0 +1,24 @@
+# Chess board (3)
+
+Consider a square chess board with $n$ rows and $n$ columns, where every
+square contains between 0 and 9 coins. Write a program such that, given
+a chess board, computes the total number of coins on its two diagonals.
+
+## Input
+
+Input begins with the size $n$ of the board. Follow $n$ lines, each one
+with $n$ characters between '`0`' and '`9`'.
+
+## Output
+
+Print the total number of coins on the two diagonals of the board.
+
+## Problem information
+
+Author: Unknown\
+Translator: Salvador Roura
+
+Generation: 2026-01-25T10:25:56.865Z
+
+© *Jutge.org*, 2006--2026.\
+<https://jutge.org>

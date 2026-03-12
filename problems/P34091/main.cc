@@ -1,7 +1,12 @@
 #include <iostream>
+using namespace std;
 
-int main(void)
+bool is_perfect(int x);
+
+int main()
 {
-    std::cout << "Hello, Santito!\n";
+    int x;
+    while (cin >> x)
+        cout << (is_perfect(x) ? "true" : "false") << endl;
     return 0;
 }

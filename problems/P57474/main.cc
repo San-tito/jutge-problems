@@ -1,7 +1,13 @@
 #include <iostream>
+using namespace std;
 
-int main(void)
+int factorial(int n);
+
+int main()
 {
-    std::cout << "Hello, Santito!\n";
+    int x;
+    while (cin >> x) {
+        cout << factorial(x) << endl;
+    }
     return 0;
 }

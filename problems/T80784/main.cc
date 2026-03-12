@@ -1,7 +1,14 @@
 #include <iostream>
+using namespace std;
 
-int main(void)
-{
-    std::cout << "Hello, Santito!\n";
-    return 0;
+bool is_bicolor(int n);
+
+int main() {
+	int n;
+	while (cin >> n) {
+		if (is_bicolor(n)) {
+			cout << n << endl;
+		}
+	}
+	return 0;
 }

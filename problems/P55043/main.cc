@@ -1,7 +1,14 @@
 #include <iostream>
+using namespace std;
 
-int main(void)
+int encounter_of_rivers(int n);
+
+int main()
 {
-    std::cout << "Hello, Santito!\n";
+    int n;
+    while (cin >> n) {
+        cout << n << " " << encounter_of_rivers(n) << endl;
+    }
+
     return 0;
 }

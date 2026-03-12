@@ -1,7 +1,13 @@
 #include <iostream>
+using namespace std;
 
-int main(void)
-{
-    std::cout << "Hello, Santito!\n";
+string parenthesize(string s, int n);
+
+int main()  {
+    string word;
+    int n;
+    while (cin >> word >> n) {
+        cout << parenthesize(word, n) << endl;
+    }
     return 0;
 }

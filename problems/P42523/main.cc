@@ -1,7 +1,13 @@
 #include <iostream>
+using namespace std;
 
-int main(void)
+int gcd(int a, int b);
+
+int main()
 {
-    std::cout << "Hello, Santito!\n";
+    int x, y;
+    while (cin >> x >> y) {
+        cout << gcd(x, y) << endl;
+    }
     return 0;
 }
