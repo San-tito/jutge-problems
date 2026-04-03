@@ -1,13 +1,11 @@
 #include "bintree.hh"
 using namespace pro2;
 
-void walk(BinTree<int> t, int &sum)
+int suma_(const BinTree<int> &t)
 {
     if (t.empty())
-        return;
-    sum += t.value();
-    walk(t.left(), sum);
-    walk(t.right(), sum);
+        return 0;
+    return t.value() + suma_(t.left()) + suma_(t.right());
 }
 
 /**
@@ -21,7 +19,5 @@ void walk(BinTree<int> t, int &sum)
  */
 int suma_valors(BinTree<int> t)
 {
-    int sum = 0;
-    walk(t, sum);
-    return sum;
+    return suma_(t);
 }

@@ -1,6 +1,15 @@
 #include "bintree.hh"
 using namespace pro2;
 
+bool cerca(const BinTree<int> &t, int &x)
+{
+    if (t.empty())
+        return false;
+    if (t.value() == x)
+        return true;
+    return cerca(t.left(), x) or cerca(t.right(), x);
+}
+
 /**
  * @brief Cerca un valor en un arbre binari.
  *
@@ -12,9 +21,5 @@ using namespace pro2;
  */
 bool cerca_valor(BinTree<int> t, int x)
 {
-    if (t.empty())
-        return false;
-    if (t.value() == x)
-        return true;
-    return cerca_valor(t.left(), x) || cerca_valor(t.right(), x);
+    return cerca(t, x);
 }

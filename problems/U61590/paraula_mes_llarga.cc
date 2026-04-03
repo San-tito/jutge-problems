@@ -3,4 +3,27 @@
 #include <string>
 using namespace std;
 
-list<string>::const_iterator paraula_mes_llarga(const list<string>& text);
+/*
+ * @pre
+ * @post
+ */
+list<string>::const_iterator paraula_mes_llarga(const list<string> &text)
+{
+    auto begin(text.begin());
+    auto end(text.end());
+
+    if (text.empty())
+        return end;
+
+    auto it(begin);
+    ++begin;
+
+    while (begin != end)
+    {
+        if (it->length() < begin->length())
+            it = begin;
+        ++begin;
+    }
+
+    return it;
+}

@@ -16,10 +16,12 @@ std::pair<BinTree<int>, bool> prune_tree(BinTree<int> t, int x)
 {
     if (t.empty())
         return {t, false};
-    auto left = prune_tree(t.left(), x);
-    auto right = prune_tree(t.right(), x);
     if (t.value() == x)
         return {BinTree<int>(), true};
+    auto left = prune_tree(t.left(), x);
+    auto right = prune_tree(t.right(), x);
+    if (!left.second and !right.second)
+        return {t, false};
     return {BinTree<int>(t.value(), left.first, right.first),
             left.second or right.second};
 }

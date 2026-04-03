@@ -9,4 +9,8 @@ using namespace std;
  * @pre L està ordenada ascendentment.
  * @post L conté x i segueix ordenada ascendentment.
  */
-void inserta_per_ordre(list<int>& L, int x);
+void inserta_per_ordre(list<int>& L, int x)
+{
+    L.insert(lower_bound(L.begin(), L.end(), x), x);
+}
+

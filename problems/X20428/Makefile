@@ -26,7 +26,7 @@ test: $(PROGRAM)
 		if [ ! -f "$$expected" ]; then \
 			echo "$$infile: ⚠️ Missing expected output $$expected"; continue; \
 		fi; \
-		$(PROGRAM) < "$$infile" > "$$outfile"; \
+		./$(PROGRAM) < "$$infile" > "$$outfile"; \
 		if diff -q "$$outfile" "$$expected" > /dev/null; then \
 			echo "$$infile: ✅ OK"; pass=$$((pass+1)); \
 		else \
