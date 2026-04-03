@@ -6,15 +6,11 @@ const api_client = {
     const iform = new FormData();
     const idata = { func, input, meta: this.meta };
     iform.append("data", JSON.stringify(idata));
-    for (const index in ifiles) iform.append(`file_${index}`, ifiles[index])
+    for (const index in ifiles) iform.append(`file_${index}`, ifiles[index]);
 
     const response = await fetch(this.API_URL, { method: "POST", body: iform });
-    const content = response.headers
-      .get("content-type")
-      ?.split(";")[0]
-      .toLowerCase();
-    if (content !== "multipart/form-data")
-      throw new Error("Invalid content type");
+    const content = response.headers.get("content-type")?.split(";")[0].toLowerCase();
+    if (content !== "multipart/form-data") throw new Error("Invalid content type");
 
     const oform = await response.formData();
     const odata = oform.get("data");
@@ -22,18 +18,18 @@ const api_client = {
 
     if (error) throw new Error(error.message || "Unknown error");
 
-    const ofiles = []
+    const ofiles = [];
     for (const [key, value] of oform.entries()) {
       if (value instanceof File) {
         ofiles.push({
           data: new Uint8Array(await value.arrayBuffer()),
           name: value.name,
           type: value.type,
-        })
+        });
       }
     }
 
-    return [output, ofiles]
+    return [output, ofiles];
   },
 
   login: async function (email, password) {
@@ -64,14 +60,14 @@ const api_client = {
     const date = now.toLocaleDateString("en-GB");
     const time = now.toLocaleTimeString("en-GB", { hour12: false });
 
-    const submission_id = await this.execute("student.submissions.submit", {
+    const result = await this.execute("student.submissions.submit", {
       problem_id,
       compiler_id,
       code,
       annotation: annotation || `Sent through the API on ${date} at ${time}`,
     });
 
-    return submission_id;
+    return result[0];
   },
 
   submission: async function (problem_id, submission_id) {
@@ -79,7 +75,7 @@ const api_client = {
       problem_id,
       submission_id,
     });
-    return result;
+    return result[0];
   },
 
   status: async function (problem_nm) {

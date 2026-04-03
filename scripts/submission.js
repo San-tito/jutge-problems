@@ -18,7 +18,7 @@ async function main() {
   try {
     await api_client.login(email, password);
     const submission = await api_client.submission(problem_id, submission_id);
-    
+
     console.log(`\nSubmission ID: ${submission.submission_id}`);
     console.log(`State: ${submission.state}`);
     console.log(`Verdict: ${submission.veredict || submission.verdict || "pending"}`);

@@ -34,26 +34,24 @@ async function main() {
 
     await api_client.login(email, password);
 
-    const submission_id = await api_client.submit(
-      problem_id,
-      code,
-      compiler_id
-    );
+    const submission_id = await api_client.submit(problem_id, code, compiler_id);
+
     console.log(`✓ Submitted: ${submission_id}`);
     console.log(`\nTo check verdict:`);
     console.log(`  submission ${problem_id} ${submission_id}`);
 
-    // Optional: poll for verdict
     let verdict = null;
+    const interval = 1000;
+    const maxWait = 30000;
     let elapsed = 0;
-    const maxWait = 30000; // 30 seconds
-    
-    while (!verdict && elapsed < maxWait) {
-      await new Promise((r) => setTimeout(r, 1000));
-      elapsed += 1000;
-      
+
+    while (elapsed < maxWait) {
+      await new Promise((r) => setTimeout(r, interval));
+      elapsed += interval;
+
       try {
         const state = await api_client.submission(problem_id, submission_id);
+
         if (state.state === "done") {
           verdict = state.veredict || state.verdict || "unknown";
           console.log(`\n✓ Verdict: ${verdict}`);
@@ -62,10 +60,10 @@ async function main() {
           process.stdout.write(".");
         }
       } catch (err) {
-        // Continue polling
+        process.stdout.write("!");
       }
     }
-    
+
     if (!verdict) {
       console.log("\n⏳ Still processing... check verdict later");
     }
