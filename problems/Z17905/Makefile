@@ -1,39 +1,51 @@
 CXX := g++
-CXXFLAGS := -g3 -D_GLIBCXX_DEBUG -Wall -Wextra -Werror -Wno-sign-compare -std=c++17 -fno-extended-identifiers
+CXXFLAGS := -g3 -D_GLIBCXX_DEBUG -Wall -Wextra -Werror -Wno-sign-compare -std=c++11 -fno-extended-identifiers
 
 PROGRAM := program
-SRCS := $(wildcard *.cc)
-INPUTS := $(wildcard sample-*.in sample-*.inp)
-OUTPUTS := $(patsubst %.in,%.cor,$(INPUTS))
-OUTPUTS := $(patsubst %.inp,%.cor,$(OUTPUTS))
+SRCS    := $(wildcard *.cc *.hh)
+INPUTS  := $(wildcard sample*.in sample*.inp)
 
-.PHONY: all clean test
+.PHONY: all clean test format
 
 all: $(PROGRAM)
 
-$(PROGRAM): $(SRCS)
+$(PROGRAM): $(wildcard *.cc)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
 clean:
-	rm -f $(PROGRAM)
+	rm -f $(PROGRAM) *.out
+
+format:
+	@echo "Formatting source files..."
+	@clang-format -i $(SRCS)
 
 test: $(PROGRAM)
-	@echo "Running tests..."
+	@echo "------------------------------------------------------------"
+	@echo "Running tests for $(PROGRAM)..."
+	@echo "------------------------------------------------------------"
 	@pass=0; fail=0; \
 	for infile in $(INPUTS); do \
-		outfile="$${infile%.*}.out"; \
-		expected="$${infile%.*}.cor"; \
+		base=$${infile%.*}; \
+		expected="$$base.cor"; \
+		actual="$$base.out"; \
 		if [ ! -f "$$expected" ]; then \
-			echo "$$infile: ⚠️ Missing expected output $$expected"; continue; \
+			echo "⚠️  $$infile: Missing $$expected, skipping."; \
+			continue; \
 		fi; \
-		././$(PROGRAM) < "$$infile" > "$$outfile"; \
-		if diff -q "$$outfile" "$$expected" > /dev/null; then \
-			echo "$$infile: ✅ OK"; pass=$$((pass+1)); \
+		./$(PROGRAM) < "$$infile" > "$$actual" 2>&1; \
+		if diff -bBq "$$actual" "$$expected" > /dev/null; then \
+			echo "✅ $$infile: OK"; \
+			pass=$$((pass+1)); \
+			rm -f "$$actual"; \
 		else \
-			echo "$$infile: ❌ FAIL"; fail=$$((fail+1)); \
-			diff "$$outfile" "$$expected"; \
+			echo "❌ $$infile: FAILED"; \
+			echo "--- Differences ($$actual vs $$expected) ---"; \
+			diff -y -bB --color=always "$$actual" "$$expected" || true; \
+			echo "--------------------------------------------"; \
+			fail=$$((fail+1)); \
 		fi; \
-		rm -f "$$outfile"; \
 	done; \
-	echo "Summary: $$pass passed, $$fail failed."
-
+	echo "------------------------------------------------------------"; \
+	echo "Summary: $$pass passed, $$fail failed."; \
+	echo "------------------------------------------------------------"; \
+	[ $$fail -eq 0 ]
