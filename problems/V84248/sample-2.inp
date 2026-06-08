@@ -1,0 +1,11 @@
+zapatos 
+|-- piscina 
+|   |-- futbol 
+|   |   |-- tenis 
+|   |   '-- basquet
+|   '-- alimentacion
+'-- hipica
+    |-- golf
+    '-- fitnes
+
+basquet alimentacion golf #
