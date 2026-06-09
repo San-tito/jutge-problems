@@ -116,8 +116,14 @@ public:
   // Pre: i està entre 0 i la mida de la cua implícita menys 1.
   // Post: Retorna l'i-èssim valor de la cua implícita (indexat començant des de 0).
   // Descomenteu les següents dues linies i implementeu el mètode:
-  // T operator[](int i) const {
-  // }
+  T operator[](int i) const {
+    Item *item = first;
+
+    while (i--) 
+      item = item->next;
+
+    return item->value;
+  }
 
 };
 

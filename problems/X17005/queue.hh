@@ -118,8 +118,15 @@ public:
   //       ha estat mogut cap a la última posició.
   //       En el cas en que la cua no tingués cap element, res ha canviat.
   // Descomenteu les següents dues linies i implementeu la funció:
-  // void moveFrontToLast() {
-  // }
+  void moveFrontToLast() {
+    if (last != first) {
+	Item* aux = first;
+	first = first->next;
+	aux->next = NULL;
+	last->next = aux;
+	last = aux;
+    }
+  }
 };
 
 

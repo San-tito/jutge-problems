@@ -116,8 +116,14 @@ public:
   // Pre:
   // Post: Tots els elements de la cua implícita han estat multiplicats per 'value'.
   // Descomenteu les següents dues linies i implementeu el mètode:
-  // void operator*=(T value) {
-  // }
+  void operator*=(T value) {
+      Item *item = first;
+
+	while (item != NULL) {
+	  item->value *= value;
+	  item = item->next;
+	}
+  }
 };
 
 
